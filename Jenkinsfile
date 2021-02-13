@@ -38,5 +38,9 @@ pipeline {
                     junit '**/target/surefire-reports/TEST-*.xml'
                     archiveArtifacts 'target/*.jar'
                 }
+         
+  changed {
+    emailext attachLog: true, body: '', compressLog: true, recipientProviders: [upstreamDevelopers(), requestor()], subject: '', to: 'test@jenkins'
+  }
             }
 }
