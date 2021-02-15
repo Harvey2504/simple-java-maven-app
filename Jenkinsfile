@@ -1,11 +1,11 @@
 pipeline {
     agent any
-     triggers{
-        pollSCM('* * * * *')
-    }
+    // triggers{
+    //    pollSCM('* * * * *')
+   // }
     
     tools{
-            maven 'maven-'
+            maven 'maven-3'
     }
     
     stages {
