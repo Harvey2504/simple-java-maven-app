@@ -15,24 +15,11 @@ pipeline {
                 bat 'mvn clean'
             }
         }
-        stage('Maven-Compile'){
+        stage('Maven-Verify & SonarScan'){
             steps{
-                bat 'mvn compile'
+                mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sona
             }
         }
-
-
- stage('Package & SonarQube analysis') {
-            steps {
-                withSonarQubeEnv('sonarqube') {
-                    
-                     bat 'mvn package -DskipTests sonar:sonar'
-			// bat 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'
-                    
-                }
-            }
-        }
-
 
     }
     
