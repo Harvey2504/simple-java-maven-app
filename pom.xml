@@ -15,6 +15,15 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+
+<properties>
+  <sonar.projectKey>Harvey2504_simple-java-maven-app</sonar.projectKey>
+  <sonar.organization>myfirstappinqube</sonar.organization>
+  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+</properties>
+
+
   <build>
     <plugins>
       <plugin>

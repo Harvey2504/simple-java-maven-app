@@ -1,34 +1,44 @@
 pipeline {
     agent any
-    // triggers{
-    //    pollSCM('* * * * *')
-   // }
+     triggers{
+        pollSCM('* * * * *')
+    }
     
     tools{
             maven 'maven-3'
+            jdk  'java11'
     }
     
     stages {
         stage('Maven-Clean'){
             steps{
-                sh 'mvn clean'
+                bat 'mvn clean'
             }
         }
         stage('Maven-Compile'){
             steps{
-                sh 'mvn compile'
+                bat 'mvn compile'
             }
         }
         stage('Maven-test'){
             steps{
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
-        stage('Maven-Package'){
-            steps{
-                sh 'mvn package'
+
+
+ stage('Package & SonarQube analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    
+                     bat 'mvn package sonar:sonar'
+			// bat 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'
+                    
+                }
             }
         }
+
+
     }
     
      post {
