@@ -6,6 +6,7 @@ pipeline {
     
     tools{
             maven 'maven-3'
+            jdk 'java11'
     }
     
     stages {
@@ -27,6 +28,16 @@ pipeline {
         stage('Maven-Package'){
             steps{
                 sh 'mvn package'
+            }
+        }
+         stage('build && SonarQube analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    
+                        bat 'mvn package sonar:sonar'
+			 //sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'
+                    
+                }
             }
         }
     }
