@@ -1,26 +1,41 @@
 pipeline {
     agent any
-     triggers{
-        pollSCM('* * * * *')
-    }
+    // triggers{
+    //    pollSCM('* * * * *')
+   // }
     
     tools{
             maven 'maven-3'
-            jdk  'java11'
     }
     
     stages {
         stage('Maven-Clean'){
             steps{
-                bat 'mvn clean'
+                sh 'mvn clean'
             }
         }
-        stage('Maven-Verify & SonarScan'){
+        stage('Maven-Compile'){
             steps{
-                bat 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'
+                sh 'mvn compile'
             }
         }
-
+        stage('Maven-test'){
+            steps{
+                sh 'mvn test'
+            }
+        }
+        stage('Maven-Package'){
+            steps{
+                sh 'mvn package'
+            }
+        }
     }
     
+     post {
+                always {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'target/*.jar'
+                       }
+         
+            }
 }
