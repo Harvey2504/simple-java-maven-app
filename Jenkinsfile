@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Maven-Verify & SonarScan'){
             steps{
-                bat 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'
+                mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
             }
         }
 
