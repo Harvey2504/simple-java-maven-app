@@ -16,11 +16,19 @@ pipeline {
             bat 'mvn clean'
             }
         }
-        stage('build && SonarQube analysis') {
+
+        stage('build')
+        {
+            steps{
+            bat 'mvn install'
+            }
+        }
+
+        stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('sonarqube2') {
                     
-                        bat 'mvn package sonar:sonar'
+                        bat 'mvn sonar:sonar'
                     
                 }
             }
